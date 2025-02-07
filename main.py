@@ -1,33 +1,42 @@
 from flask import Flask, render_template, request, session, redirect, flash, jsonify, current_app, url_for
 import shutil
 import os
+import random
+
 
 app = Flask(__name__)
-
-@app.route('/', methods=['GET'])
-def main():
-    return render_template('index.html')
-
 GIFS = {
     "annoyed": "static/images/annoyed.gif",
     "drink": "static/images/drink.gif"
 }
 EXECUTE_FILE = "static/images/execute.gif"
 
-def update_gif(gif_name):
+last_gif = None
+
+def get_gif():
+    global last_gif
     """Deletes execute.gif and copies the new gif as execute.gif"""
+    random_gif = random.choice(list(GIFS.values()))
+    while random_gif == last_gif:
+        random_gif = random.choice(list(GIFS.values()))
+    last_gif = random_gif
+    return random_gif
+
+def update_gif():
+    gif = get_gif()
     if os.path.exists(EXECUTE_FILE):
         os.remove(EXECUTE_FILE)
-    shutil.copy(GIFS[gif_name], EXECUTE_FILE)
+    shutil.copy(gif, EXECUTE_FILE)
 
+@app.route('/', methods=['GET'])
+def main():
+    return render_template('index.html')
 
-@app.route("/<action>")
-def change_gif(action):
-    print(action)
-    if action in GIFS:
-        update_gif(action)
-        return render_template('index.html')
-    return "Invalid action", 404
+@app.route("/choices")
+def change_gif():
+    update_gif()
+    return render_template('index.html')
+    
 
 if __name__ == '__main__':
     app.run()
