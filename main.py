@@ -35,7 +35,7 @@ def main():
 @app.route("/choices")
 def change_gif():
     update_gif()
-    return print("success")
+    return redirect("https://osu.ppy.sh/users/19921620")
     
 
 if __name__ == '__main__':
