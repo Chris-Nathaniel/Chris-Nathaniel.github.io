@@ -30,13 +30,8 @@ def update_gif():
 
 @app.route('/', methods=['GET'])
 def main():
-    return render_template('index.html', time=time.time())
-
-@app.route("/choices")
-def change_gif():
     update_gif()
-    return "ok"
-    
+    return redirect('https://osu.ppy.sh/users/19921620')
 
 if __name__ == '__main__':
     app.run()
