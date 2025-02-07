@@ -2,9 +2,7 @@ from flask import Flask, render_template, request, session, redirect, flash, jso
 app = Flask(__name__)
 
 @app.route('/')
-def choose_option():
-
-
+def main():
     return render_template('index.html')
 
 
