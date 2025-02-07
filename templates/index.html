@@ -10,6 +10,6 @@
     <p>hello world</p>
     <a href="/choices"><button>Click me!</button></a>
     <br>
-    <img src="/static/images/execute.gif">
+    <img src="{{ url_for('static', filename='images/execute.gif') }}?t={{ time }}" />
 </body>
 </html>

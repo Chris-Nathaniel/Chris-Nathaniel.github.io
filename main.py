@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, session, redirect, flash, jso
 import shutil
 import os
 import random
-
+import time
 
 app = Flask(__name__)
 GIFS = {
@@ -30,12 +30,12 @@ def update_gif():
 
 @app.route('/', methods=['GET'])
 def main():
-    return render_template('index.html')
+    return render_template('index.html', time=time.time())
 
 @app.route("/choices")
 def change_gif():
     update_gif()
-    return redirect("/")
+    return "ok"
     
 
 if __name__ == '__main__':
