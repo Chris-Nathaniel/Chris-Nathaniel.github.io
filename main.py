@@ -30,14 +30,14 @@ def update_gif():
 
 @app.route('/', methods=['GET'])
 def main():
+    update_gif()
     timestamp = int(time.time())  # Generate a new timestamp
     return redirect(f'https://osu.ppy.sh/users/19921620?t={timestamp}')
 
 @app.route('/dynamic_execute.gif')
 def serve_gif():
     """Serve execute.gif with cache prevention."""
-    update_gif()
-
+    
     response = make_response(send_file(EXECUTE_FILE, mimetype='image/gif'))
     response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
     response.headers['Pragma'] = 'no-cache'
