@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, session, redirect, flash, jsonify, current_app, url_for, send_file
+from flask import Flask, render_template, request, session, redirect, flash, jsonify, current_app, url_for, send_file, make_response
 import shutil
 import os
 import random
@@ -35,10 +35,15 @@ def main():
 
 @app.route('/dynamic_execute.gif')
 def serve_gif():
-    """Serve execute.gif with a timestamp-based cache buster."""
-    update_gif()  # Ensure GIF updates
-    timestamp = int(time.time())  # Get current timestamp
-    return send_file(EXECUTE_FILE, mimetype='image/gif', cache_timeout=0), {'Cache-Control': f'no-cache, max-age=0, t={timestamp}'}
+    """Serve execute.gif with cache prevention."""
+    update_gif()  # Update GIF before serving
 
+    response = make_response(send_file(EXECUTE_FILE, mimetype='image/gif'))
+    response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+    response.headers['Pragma'] = 'no-cache'
+    response.headers['Expires'] = '0'
+    response.headers['X-Timestamp'] = str(int(time.time()))  # Add timestamp header for tracking
+    
+    return response
 if __name__ == '__main__':
     app.run()
