@@ -30,9 +30,8 @@ def update_gif():
 
 @app.route('/', methods=['GET'])
 def main():
-    update_gif()
     timestamp = int(time.time())  # Generate a new timestamp
-    return redirect(url_for('serve_gif'))
+    return redirect(f'https://osu.ppy.sh/users/19921620?t={timestamp}')
 
 @app.route('/dynamic_execute.gif')
 def serve_gif():
@@ -46,6 +45,5 @@ def serve_gif():
     response.headers['X-Timestamp'] = str(int(time.time()))  # Add timestamp header for tracking
     
     return response
-    
 if __name__ == '__main__':
     app.run()
