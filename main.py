@@ -31,6 +31,7 @@ def update_gif():
 @app.route('/', methods=['GET'])
 def main():
     update_gif()
+    time.sleep(3)
     return redirect('https://osu.ppy.sh/users/19921620')
 
 @app.route('/dynamic_execute.gif')
