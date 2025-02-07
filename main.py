@@ -32,7 +32,7 @@ def update_gif():
 def main():
     update_gif()
     timestamp = int(time.time())  # Generate a new timestamp
-    return redirect(f'https://osu.ppy.sh/users/19921620?t={timestamp}')
+    return redirect(f'https://osu.ppy.sh/users/19921620?t={timestamp}#me')
 
 @app.route('/dynamic_execute.gif')
 def serve_gif():
