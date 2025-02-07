@@ -35,7 +35,7 @@ def main():
 @app.route("/choices")
 def change_gif():
     update_gif()
-    return render_template('index.html')
+    return print("success")
     
 
 if __name__ == '__main__':
